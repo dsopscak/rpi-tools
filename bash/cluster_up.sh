@@ -41,8 +41,8 @@ for addr in $(cut -d ' ' -f 3 $LEASE_FILE); do
     echo '*****************'
     echo $addr
     ssh_accept_host $addr
-    sshpass -p zoopi rsync -tpr $DIR/ pi@$addr:~/rpi_tools 
-    sshpass -p zoopi ssh pi@$addr ./rpi_tools/blink_green.sh
+    sshpass -p raspberry rsync -tpr $DIR/ pi@$addr:~/rpi_tools
+    sshpass -p raspberry ssh pi@$addr ./rpi_tools/blink_green.sh
     echo "Enter hostname suffix:"
     read suffix
     if [[ -z "$suffix" ]]; then
@@ -51,7 +51,7 @@ for addr in $(cut -d ' ' -f 3 $LEASE_FILE); do
         new_name=pi$suffix
         echo "Using $new_name as the hostname for $addr"
         ssh_accept_host $new_name
-        if sshpass -p zoopi ssh pi@$new_name ./rpi_tools/setup_node.sh $new_name "'$PUB_KEY'"; then
+        if sshpass -p raspberry ssh pi@$new_name ./rpi_tools/setup_node.sh $new_name "'$PUB_KEY'"; then
             ssh pi@$new_name sudo reboot
             echo "$addr $new_name" | sudo tee -a /etc/hosts
         fi
