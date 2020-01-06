@@ -1,17 +1,29 @@
 #!/usr/bin/env bash
+#
+# cluster_main.sh
+#
+# Run first to setup a main, master node of a cluster. Sets up
+# dnsmasq-based dns and dhcpd services for additional, slave nodes
+# that will be connected via wired ethernet. The "master" will also
+# act as a router, providing access to whatever network is connected
+# via wifi.
+#
+# Reboot needed after running this.
 
 sudo apt update
-sudo apt install -y dnsmasq
-sudo apt install sshpass
+sudo apt install -y dnsmasq sshpass
 
+# Activate dhcpd facility on wired (eth0) interface
 sudo cp -p /etc/dnsmasq.conf /etc/dnsmasq.conf.orig
 sudo sed -i 's/^#interface=/interface=eth0/' /etc/dnsmasq.conf
 sudo sed -i '0,/^#dhcp-range=.*/s//dhcp-range=192.168.99.50,192.168.99.150,12h/' /etc/dnsmasq.conf
 
+# Establish static address for wired (eth0) interface
 sudo cp -p /etc/dhcpcd.conf /etc/dhcpcd.conf.orig
 sudo sed -i '0,/^#interface eth0/s//interface eth0/' /etc/dhcpcd.conf
 sudo sed -i 's/^#static ip_address=192.168.0.10\/24/static ip_address=192.168.99.1\/24/' /etc/dhcpcd.conf
 
+# Sooper simple router between wired and wifi interfaces
 sudo cp -p /etc/rc.local /etc/rc.local.orig
 cat << 'EOF' | sudo tee /etc/rc.local
 #!/bin/sh -e
@@ -40,5 +52,6 @@ echo 1 >/proc/sys/net/ipv4/ip_forward
 exit 0
 EOF
 
+# Insure there is a default key pair for use with the slaves
 cat /dev/zero | ssh-keygen -q -N ""
 
