@@ -50,10 +50,11 @@ for addr in $(cut -d ' ' -f 3 $LEASE_FILE); do
     else
         new_name=pi$suffix
         echo "Using $new_name as the hostname for $addr"
+        # TODO: some sanity checking befor updating hosts file...
+        echo "$addr $new_name" | sudo tee -a /etc/hosts
         ssh_accept_host $new_name
         if sshpass -p raspberry ssh pi@$new_name ./rpi_tools/setup_node.sh $new_name "'$PUB_KEY'"; then
             ssh pi@$new_name sudo reboot
-            echo "$addr $new_name" | sudo tee -a /etc/hosts
         fi
     fi
 done
