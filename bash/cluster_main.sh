@@ -55,3 +55,5 @@ EOF
 # Insure there is a default key pair for use with the slaves
 cat /dev/zero | ssh-keygen -q -N ""
 
+echo
+echo "Cluster master setup complete. Reboot required before any other steps."
