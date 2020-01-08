@@ -1,6 +1,6 @@
 # create_raspbian_boot.ps1
 #
-# A command line windows utility for creating raspbianRun boot images with
+# A command line windows utility for creating raspbian boot images with
 # ssh enabled. Must run from an admin powershell console:
 #
 #   create_raspbian_boot.ps1 -ifile <image file> -device <drive letter>
