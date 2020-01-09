@@ -21,6 +21,8 @@ param (
 )
 
 C:\CommandLineDiskImager\CommandLineDiskImager.exe $ifile $device
+sleep 5
 echo "" >>"${device}:\ssh"
+sleep 2
 $driveEject = New-Object -comObject Shell.Application
 $driveEject.Namespace(17).ParseName("${device}:").InvokeVerb("Eject")
