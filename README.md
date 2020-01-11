@@ -3,7 +3,7 @@
 Dev-Opsy tools for working with Raspberry Pi computers.
 
 ## Scenario: Mini-Cluster Lab
-You have some number N of Raspberry Pi computers you want to configure as a cluster of N-1 like-configured slaves on their own sub-network. The remaining Pi will be configured as a master providing controlled access to the cluster. Network connections between the Pi's will use their wired interface and the master will connect to the "outside" world using its wi-fi interface. The master will act as a router for the cluster, making the external network visible to the slaves.
+You have some number N of Raspberry Pi computers you want to set up as a cluster of N-1 like-configured slaves on their own sub-network. The remaining Pi will be configured as a master providing controlled access to the cluster. Network connections between the Pi's will use their wired interface and the master will connect to the "outside" world using its wi-fi interface. The master will act as a router for the cluster, making the external network visible to the slaves.
 
 The hardware needed, in addition to the Pi's themselves, includes:
 
