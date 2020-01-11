@@ -21,7 +21,13 @@ The hardware needed, in addition to the Pi's themselves, includes:
 
 The images/create_raspbian_boot.ps1 script provides a minimal command line facility for writing raspbian images, with ssh enabled, using a windows computer.
 
-Connect everything up but leave the power off on the slaves to start. Power up the master and run through the first boot setup, being sure to configure the wi-fi network. With initial setup complete, clone this repo on the master and run the bash/cluster_main.sh script. This script depends on default contents for the various system files it updates, so any manual configuration beyond that described above may cause it to malfunction. With that complete, a final reboot on the master is needed.
+Connect everything up but leave the power off on the slaves to start. Power up the master and run through the first boot setup, being sure to configure the wi-fi network. With initial setup complete, clone this repo on the master. Place a file named "secrets" in the bash directory with the following contents to set the password to be configured on the slaves:
+
+ ```bash
+ PI_PASSWORD=some_password
+ ```
+
+ Run the bash/cluster_main.sh script. This script depends on default contents for the various system files it updates, so any manual configuration beyond that described above may cause it to malfunction. With that complete, a final reboot on the master is needed.
 
 Apply power to the remaining Raspberry Pi's and wait for them all to complete their initial boot. It shouldn't take more than a few minutes and you should be able to tell by watching the green LED's. When they're ready, the green LED activity will be very low.
 
