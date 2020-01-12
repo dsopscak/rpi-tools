@@ -3,7 +3,7 @@
 # A command line windows utility for creating raspbian boot images with
 # ssh enabled. Must run from an admin powershell console:
 #
-#   create_raspbian_boot.ps1 -ifile <image file> -device <drive letter>
+#   create_raspbian_boot.ps1 -ifile <image file> -device <drive letter> [-wpa <wpa_supplicant.conf>]
 #
 # Get CommandLineDiskImager from
 #
@@ -17,12 +17,16 @@
 
 param (
   [Parameter(Mandatory=$true)][string]$ifile,
-  [Parameter(Mandatory=$true)][string]$device
+  [Parameter(Mandatory=$true)][string]$device,
+  [string]$wpa
 )
 
 C:\CommandLineDiskImager\CommandLineDiskImager.exe $ifile $device
 sleep 5
 echo "" >>"${device}:\ssh"
+if ($PSBoundParameters.ContainsKey('wpa')) {
+    copy $wpa "${device}:\wpa_supplicant.conf"
+}
 sleep 2
 $driveEject = New-Object -comObject Shell.Application
 $driveEject.Namespace(17).ParseName("${device}:").InvokeVerb("Eject")
