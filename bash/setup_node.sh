@@ -31,10 +31,17 @@ sudo cp -p /etc/hosts /etc/hosts.orig
 sudo sed -i "s/raspberrypi/$HOSTNAME/g" /etc/hosts
 sudo cp -p /etc/hostname /etc/hostname.orig
 sudo sed -i "s/raspberrypi/$HOSTNAME/g" /etc/hostname
+
+# TODO: make less enthnocentirc
 sudo cp -p /etc/locale.gen /etc/locale.gen.orig
 sudo sed -i 's/^# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
 sudo sed -i 's/^en_GB.UTF-8 UTF-8/# en_US.UTF-8 UTF-8/' /etc/locale.gen
 sudo locale-gen
+cat << EOF | sudo tee -a /etc/environment >/dev/null
+LANG=en_US.UTF-8
+LANGUAGE=en_US:en
+LC_ALL=en_US.utf8
+EOF
 
 echo -e "$PI_PASSWORD\n$PI_PASSWORD" | sudo passwd $USER
 
