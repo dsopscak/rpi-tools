@@ -17,7 +17,7 @@ The hardware needed, in addition to the Pi's themselves, includes:
 
 * A micro-sdhc card for each computer with a fresh raspbian image and ssh enabled.
 
-* A monitor, keyboard, and mouse to connect to the master Pi.
+* A monitor, keyboard, and mouse to connect to the master Pi. Or a wpa_supplicant file on the master's boot drive and additional expertise for headless initial setup.
 
 * Some kind of cases or a mini rack to house the computers (not strictly needed but makes life much easier)
 
