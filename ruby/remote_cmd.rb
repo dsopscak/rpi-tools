@@ -4,7 +4,13 @@
 
 require 'net/ssh'
 
-ALL_HOSTS = %w[pi01 pi02 pi03 pi04]
+config_file = File.join ENV['HOME'], '.remote_cmd.config'
+if File.file? config_file
+  load config_file
+else
+  puts "[#{config_file}] not found, using defaults"
+  ALL_HOSTS = %w[pi01 pi02 pi03 pi04]
+end
 
 def run_cmd host, cmd
   Net::SSH.start(host, 'pi') do |ssh|
