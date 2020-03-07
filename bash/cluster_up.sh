@@ -53,10 +53,13 @@ for addr in $(cut -d ' ' -f 3 $LEASE_FILE); do
         # TODO: some sanity checking befor updating hosts file...
         echo "$addr $new_name" | sudo tee -a /etc/hosts
         ssh_accept_host $new_name
+        hosts="$hosts $new_name"
         if sshpass -p raspberry ssh pi@$new_name ./rpi_tools/setup_node.sh $new_name "'$PUB_KEY'"; then
             ssh pi@$new_name sudo reboot
         fi
     fi
 done
+
+echo "ALL_HOSTS = %w[$hosts]" >>$HOME/.remote_cmd.config
 
 sudo service dnsmasq restart # pick up any changes to /etc/hosts
