@@ -18,15 +18,19 @@
 param (
   [Parameter(Mandatory=$true)][string]$ifile,
   [Parameter(Mandatory=$true)][string]$device,
-  [string]$wpa
+  [string]$wpa,
+  [string]$usr
 )
 
 C:\CommandLineDiskImager\CommandLineDiskImager.exe $ifile $device
-sleep 5
-echo "" >>"${device}:\ssh"
+sleep 10
 if ($PSBoundParameters.ContainsKey('wpa')) {
     copy $wpa "${device}:\wpa_supplicant.conf"
 }
-sleep 2
+if ($PSBoundParameters.ContainsKey('usr')) {
+  copy $usr "${device}:\userconf.txt"
+}
+echo "" >>"${device}:\ssh"
+sleep 5
 $driveEject = New-Object -comObject Shell.Application
 $driveEject.Namespace(17).ParseName("${device}:").InvokeVerb("Eject")
