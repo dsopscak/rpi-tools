@@ -2,8 +2,10 @@
 #
 # Blinks the green led for 10 seconds.
 
-trigger_file=/sys/class/leds/led0/trigger
-lite_file=/sys/class/leds/led0/brightness
+LED=ACT
+
+trigger_file=/sys/class/leds/$LED/trigger
+lite_file=/sys/class/leds/$LED/brightness
 count=10
 gap='.5'
 
